@@ -85,9 +85,10 @@ function App() {
       Draw();
 
     if (
-      e.acceleration.x > shakeThreshold ||
-      e.acceleration.y > shakeThreshold ||
-      e.acceleration.z > shakeThreshold
+      (e.acceleration.x > shakeThreshold ||
+        e.acceleration.y > shakeThreshold ||
+        e.acceleration.z > shakeThreshold) &&
+      !resultRef.current
     ) {
       setLotNum(getRandomInt(lotCount));
     }
@@ -156,7 +157,7 @@ function App() {
             position: "fixed",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -10vh);",
+            transform: "translate(-50%, -20vh);",
           }}
         />
       </Box>

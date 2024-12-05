@@ -11,8 +11,6 @@ export const Result = forwardRef<HTMLInputElement, ResultProps>(
   (props, ref) => {
     const borderStyle = "0.25rem solid #FF0000";
     const lot = lotdata.Lot[props.lotNum];
-    console.log(props.lotNum);
-    console.log(lot);
     const LuckList = lot.LuckList?.map((luckdata, key) => {
       const luckMsg = `${luckdata.LuckName}：${luckdata.LuckRank}`;
       return (
