@@ -1,12 +1,14 @@
 import { Button, Card, Typography } from "@mui/material";
+import { forwardRef } from "react";
 
-type RuleProps = {
+interface RuleProps {
   handleClose: () => void;
-};
+}
 
-export const Rule: React.FC<RuleProps> = ({ handleClose }) => {
+export const Rule = forwardRef<HTMLInputElement, RuleProps>((props, ref) => {
   return (
     <Card
+      ref={ref}
       sx={{
         position: "fixed",
         top: "50%",
@@ -18,7 +20,7 @@ export const Rule: React.FC<RuleProps> = ({ handleClose }) => {
     >
       <Typography variant="h3">説明</Typography>
       <Typography>スマホ振っておみくじ引いてください</Typography>
-      <Button onClick={handleClose}>引く</Button>
+      <Button onClick={props.handleClose}>引く</Button>
     </Card>
   );
-};
+});
