@@ -1,30 +1,63 @@
 {
   "Lot": [
     {
-      "Fortune": "スーパーアルティメット大吉",
-      "Details": [
+      "Fortune": "ギガ大吉",
+      "Msg": "あー、もう運良すぎて私じゃ手付けられないわ～！\nもう何とでもなっちゃうよ！\nあー後光が眩しｯ！！！",
+      "LuckList": [
         {
           "LuckName": "全ての運",
-          "LuckRank": "★★★★★★★★★★★★★★★★★★★★",
-          "LuckMsg": "全て上手くいきます。羨ましいです。"
-        },
-        { "Msg": "もうどうにでもなる" }
+          "LuckRank": "★★★★★★★★★★★★★★★★★★★★"
+        }
       ]
     },
     {
       "Fortune": "大吉",
-      "Details": [
+      "Msg": "基本的には為せば成る",
+      "LuckList": [
         {
           "LuckName": "勉強運",
-          "LuckRank": "★★★★☆",
-          "LuckMsg": "励めよ。"
+          "LuckRank": "★★★★☆"
         },
         {
           "LuckName": "バグ運",
-          "LuckRank": "★★★★★",
-          "LuckMsg": "何個か出るけど直せます"
+          "LuckRank": "★★★★★"
+        }
+      ]
+    },
+    {
+      "Fortune": "金虎吉",
+      "Msg": "お前の苦労をずっと見ていたぞ。本当によく頑張ったな。",
+      "LuckList": [
+        {
+          "LuckName": "金運",
+          "LuckRank": "急上昇"
+        }
+      ]
+    },
+    {
+      "Fortune": "undefined吉",
+      "Msg": "undefined \n\n\n\n\n あ、これ仕様ね？",
+      "LuckList": [
+        {
+          "LuckName": "undefined",
+          "LuckRank": "undefined"
         },
-        { "Msg": "最後に信じれるのは自分のみ" }
+        {
+          "LuckName": "undefined",
+          "LuckRank": "undefined"
+        },
+        {
+          "LuckName": "undefined",
+          "LuckRank": "undefined"
+        },
+        {
+          "LuckName": "undefined",
+          "LuckRank": "undefined"
+        },
+        {
+          "LuckName": "undefined",
+          "LuckRank": "undefined"
+        }
       ]
     }
   ]

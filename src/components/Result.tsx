@@ -1,30 +1,46 @@
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import { forwardRef } from "react";
+import lotdata from "../assets/Lot.json";
 
 interface ResultProps {
+  lotNum: number;
   handleClose: () => void;
 }
 
 export const Result = forwardRef<HTMLInputElement, ResultProps>(
   (props, ref) => {
     const borderStyle = "0.25rem solid #FF0000";
+    const lot = lotdata.Lot[props.lotNum];
+    console.log(props.lotNum);
+    console.log(lot);
+    const LuckList = lot.LuckList?.map((luckdata, key) => {
+      const luckMsg = `${luckdata.LuckName}：${luckdata.LuckRank}`;
+      return (
+        <Typography variant="h6" key={key}>
+          {luckMsg}
+        </Typography>
+      );
+    });
     return (
       <Card
-        ref={ref}
         sx={{
           position: "fixed",
-          top: "50%",
+          margin: "auto",
+          height: "90%",
+          maxWidth: "calc(552px - 0.25rem)",
+          width: "90%",
           left: "50%",
+          top: "50%",
           transform: "translate(-50%, -50%);",
-          height: "50rem",
-          width: "30rem",
           textAlign: "center",
           padding: "0.25rem",
           border: "0.5rem solid #FF0000",
           color: "#FF0000",
+          whiteSpace: "pre-wrap",
         }}
       >
         <Box
+          ref={ref}
           sx={{
             width: "100%",
             height: "100%",
@@ -32,22 +48,7 @@ export const Result = forwardRef<HTMLInputElement, ResultProps>(
           }}
         >
           <Box sx={{ padding: "0.5rem", borderBottom: `${borderStyle}` }}>
-            <Typography variant="h2">大吉</Typography>
-          </Box>
-          <Box
-            sx={{
-              padding: "1rem",
-              height: "7rem",
-              borderBottom: `${borderStyle}`,
-            }}
-          >
-            <Typography>
-              悪いことの後には良いことが必ず待っている。
-              <br />
-              いい結果を掴み取るまで逃げることなかれ。
-              <br />
-              とか言っておけばそれっぽいでしょ☆彡
-            </Typography>
+            <Typography variant="h3">{lot.Fortune}</Typography>
           </Box>
           <Box
             sx={{
@@ -55,22 +56,35 @@ export const Result = forwardRef<HTMLInputElement, ResultProps>(
               borderBottom: `${borderStyle}`,
             }}
           >
-            <Typography variant="h6">仕事運：★★★★☆</Typography>
-            <Typography variant="h6">金運：★★★★★</Typography>
-            <Typography variant="h6">恋愛運：★★★★☆</Typography>
-            <Typography variant="h6">健康運：★★★★★</Typography>
-            <Typography variant="h6">日本通運：★★★★★</Typography>
+            <Typography variant="h5">山本神社</Typography>
+          </Box>
+          <Box
+            sx={{
+              padding: "1rem",
+              borderBottom: `${borderStyle}`,
+            }}
+          >
+            {LuckList}
+          </Box>
+          <Box
+            sx={{
+              padding: "1rem",
+            }}
+          >
+            <Typography variant="body2">{lot.Msg}</Typography>
           </Box>
           <Box
             sx={{
               position: "fixed",
-              width: "100%",
+              width: "calc(100% - 1rem)",
               padding: "0.5rem",
               bottom: "0.25rem",
               borderTop: `${borderStyle}`,
             }}
           >
-            <Typography variant="h6">山本神社</Typography>
+            <Button onClick={props.handleClose} sx={{ color: "#FF0000" }}>
+              閉じる
+            </Button>
           </Box>
         </Box>
       </Card>

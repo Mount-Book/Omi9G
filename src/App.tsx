@@ -1,23 +1,30 @@
 import boximg from "/src/assets/Box_ganbatta1.png";
-import { Box, Container, Modal, Typography } from "@mui/material";
+import { Box, Button, Container, Modal, Typography } from "@mui/material";
 import { forwardRef, useEffect, useRef, useState } from "react";
 import { Rule } from "./components/Rule";
 import { Result } from "./components/Result";
+import lotdata from "./assets/Lot.json";
 
 const RuleWithRef = forwardRef<HTMLInputElement, { handleClose: () => void }>(
   (props, ref) => {
     return <Rule {...props} ref={ref} />;
   }
 );
-const ResultWithRef = forwardRef<HTMLInputElement, { handleClose: () => void }>(
-  (props, ref) => {
-    return <Result {...props} ref={ref} />;
-  }
-);
+const ResultWithRef = forwardRef<
+  HTMLInputElement,
+  { lotNum: number; handleClose: () => void }
+>((props, ref) => {
+  return <Result {...props} ref={ref} />;
+});
+const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
 
 function App() {
   const shakeThreshold = 12.5; //振りの閾値
-  const obliqueThreshold = -15; //傾きの閾値
+  const obliqueThreshold = -5; //傾きの閾値
+  const lotCount = lotdata.Lot.length; //おみくじの結果の数
+  const [lotNum, setLotNum] = useState(getRandomInt(lotCount));
 
   const [isRuleOpen, setRuleOpen] = useState(true);
   const [isResultOpen, setResultOpen] = useState(false);
@@ -72,9 +79,18 @@ function App() {
       (e.acceleration.x > shakeThreshold ||
         e.acceleration.y > shakeThreshold ||
         e.acceleration.z > shakeThreshold) &&
-      obliqueRef.current
+      obliqueRef.current &&
+      !resultRef.current
     )
       Draw();
+
+    if (
+      e.acceleration.x > shakeThreshold ||
+      e.acceleration.y > shakeThreshold ||
+      e.acceleration.z > shakeThreshold
+    ) {
+      setLotNum(getRandomInt(lotCount));
+    }
   };
   const handleDiviceorientation = (e) => {
     if (e.beta < obliqueThreshold) {
@@ -115,12 +131,18 @@ function App() {
         <RuleWithRef ref={inputRef} handleClose={handleRuleClose} />
       </Modal>
       <Modal open={isResultOpen} onClose={handleResultClose}>
-        <ResultWithRef ref={inputRef} handleClose={handleResultClose} />
+        <ResultWithRef
+          ref={inputRef}
+          handleClose={handleResultClose}
+          lotNum={lotNum}
+        />
       </Modal>
       <Box sx={{ height: "90vh" }}>
-        <Typography variant="h1" sx={{ padding: "1rem" }}>
-          振れ！
-        </Typography>
+        <Button onClick={() => setLotNum(getRandomInt(lotCount))}>
+          <Typography variant="h1" sx={{ padding: "1rem", color: "#000000" }}>
+            振れ！
+          </Typography>
+        </Button>
         <Typography>x: {x}</Typography>
         <Typography>y: {y}</Typography>
         <Typography>z: {z}</Typography>
