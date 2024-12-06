@@ -4,6 +4,9 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { Rule } from "./components/Rule";
 import { Result } from "./components/Result";
 import lotdata from "./assets/Lot.json";
+import useSound from "use-sound";
+import ShakeSE from "./assets/shake.mp3";
+import DarwSE from "./assets/draw.mp3";
 
 const RuleWithRef = forwardRef<HTMLInputElement, { handleClose: () => void }>(
   (props, ref) => {
@@ -35,9 +38,9 @@ function App() {
   const obliqueRef = useRef(false);
   obliqueRef.current = isOblique;
   const inputRef = useRef<HTMLInputElement>(null);
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [z, setZ] = useState(0);
+
+  const [shakePlay, { stop }] = useSound(ShakeSE);
+  const [darwPlay] = useSound(DarwSE);
 
   const handleRuleClose = () => {
     if (!hasPermission) RequestPermission();
@@ -69,7 +72,15 @@ function App() {
   }, []);
 
   const Draw = () => {
+    stop();
+    darwPlay();
     setResultOpen(true);
+  };
+
+  const Shake = () => {
+    stop();
+    shakePlay();
+    setLotNum(getRandomInt(lotCount));
   };
 
   const handleDevicemotion = (e) => {
@@ -90,7 +101,7 @@ function App() {
         e.acceleration.z > shakeThreshold) &&
       !resultRef.current
     ) {
-      setLotNum(getRandomInt(lotCount));
+      Shake();
     }
   };
   const handleDiviceorientation = (e) => {
@@ -99,9 +110,6 @@ function App() {
     } else {
       setOblique(false);
     }
-    setX(Math.round(e.alpha));
-    setY(Math.round(e.beta));
-    setZ(Math.round(e.gamma));
   };
 
   const RequestPermission = () => {
@@ -139,15 +147,11 @@ function App() {
         />
       </Modal>
       <Box sx={{ height: "90vh" }}>
-        <Button onClick={() => setLotNum(getRandomInt(lotCount))}>
+        <Button onClick={() => Shake()}>
           <Typography variant="h1" sx={{ padding: "1rem", color: "#000000" }}>
             振れ！
           </Typography>
         </Button>
-        <Typography>x: {x}</Typography>
-        <Typography>y: {y}</Typography>
-        <Typography>z: {z}</Typography>
-        <Typography>傾きチェッカー: {isOblique ? "true" : "false"}</Typography>
         <Box
           component="img"
           src={boximg}
@@ -157,7 +161,7 @@ function App() {
             position: "fixed",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -20vh);",
+            transform: "translate(-50%, -15vh);",
           }}
         />
       </Box>
