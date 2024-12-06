@@ -92,10 +92,9 @@ function App() {
         e.acceleration.z > shakeThreshold) &&
       obliqueRef.current &&
       !resultRef.current
-    )
+    ) {
       Draw();
-
-    if (
+    } else if (
       (e.acceleration.x > shakeThreshold ||
         e.acceleration.y > shakeThreshold ||
         e.acceleration.z > shakeThreshold) &&
